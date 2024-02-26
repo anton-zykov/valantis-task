@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/anton-zykov/valantis-task/issues"
   },
-  "homepage": "https://github.com/anton-zykov/valantis-task#readme"
+  "homepage": "https://github.com/anton-zykov/valantis-task#readme",
+  "devDependencies": {
+    "eslint": "^8.57.0"
+  }
 }
