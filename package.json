@@ -1,0 +1,19 @@
+{
+  "name": "valantis",
+  "version": "1.0.0",
+  "description": "This is a test task for Valantis",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anton-zykov/valantis-task.git"
+  },
+  "author": "Anton Zykov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anton-zykov/valantis-task/issues"
+  },
+  "homepage": "https://github.com/anton-zykov/valantis-task#readme"
+}
