@@ -3,6 +3,7 @@
   border-radius: 0.5em;
 
   padding: 1em;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
 }
@@ -13,19 +14,24 @@
 }
 
 .card__title {
-  font-size: 1.5em;
+  margin: 0.5em 0;
+  font-size: 1.2em;
 }
 
 .card__description {
+  flex-grow: 1;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: end;
 }
 
 .card__brand {
+  margin-bottom: 0.2em;
   color: var(--grey);
+  font-weight: 200;
 }
 
 .card__price {
   font-size: 2em;
+  font-weight: 500;
 }

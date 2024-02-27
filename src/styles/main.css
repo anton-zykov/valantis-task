@@ -1,8 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('./normalize.css');
+@import url('../components/page/page.css');
 @import url('../components/Card/Card.css');
 
 :root {
   --black: hsl(0, 0%, 0%);
-  --grey: hsla(0, 0%, 70%, 0.9);
+  --silver: hsl(0, 0%, 75%);
   --light-grey: hsla(0, 0%, 70%, 0.75);
+
+  font-family: 'Montserrat', sans-serif;
 }

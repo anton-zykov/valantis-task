@@ -10,7 +10,7 @@ export default class Card {
 
   createTemplate () {
     return `
-      <div class="card">
+      <div class="page__card card">
         <div class="card__id">${this.id}</div>
         <p class="card__title">${this.product}</p>
         <div class="card__description">

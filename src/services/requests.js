@@ -1,4 +1,4 @@
-import APIRequest from "./APIRequest";
+import APIRequest from './APIRequest';
 
 export const getIDs = async (offset = 0, limit = 50) => {
   const requestBody = {
