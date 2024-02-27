@@ -2,9 +2,11 @@
   "name": "valantis",
   "version": "1.0.0",
   "description": "This is a test task for Valantis",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
@@ -17,6 +19,13 @@
   },
   "homepage": "https://github.com/anton-zykov/valantis-task#readme",
   "devDependencies": {
-    "eslint": "^8.57.0"
+    "css-loader": "^6.10.0",
+    "eslint": "^8.57.0",
+    "style-loader": "^3.3.4",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "js-md5": "^0.8.3"
   }
 }
