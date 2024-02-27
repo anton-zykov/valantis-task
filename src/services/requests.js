@@ -1,33 +1,48 @@
-import createHash from "./createHash";
+import APIRequest from "./APIRequest";
 
-const baseURL = 'http://api.valantis.store:40000/';
-const reserveURL = 'https://api.valantis.store:41000/';
-
-const APIRequest = async (data) => {
-  const params = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Auth': createHash(),
+export const getIDs = async (offset = 0, limit = 50) => {
+  const requestBody = {
+    action: 'get_ids',
+    params: {
+      offset,
+      limit,
     },
-    body: JSON.stringify(data),
   };
 
-  try {
-    const response = await fetch(baseURL, params);
-    const data = await response.json();
-    return data;
-  } catch (e) {
-    console.error(e.message);
-  }
-
-  try {
-    const response = await fetch(reserveURL, params);
-    const data = await response.json();
-    return data;
-  } catch (e) {
-    console.error(e.message);
-  }
+  return await APIRequest(requestBody);
 };
 
-export default APIRequest;
+export const getItems = async (ids = []) => {
+  const requestBody = {
+    action: 'get_items',
+    params: {
+      ids,
+    },
+  };
+
+  return await APIRequest(requestBody);
+};
+
+export const getFields = async (field, offset, limit = 50) => {
+  const requestBody = {
+    action: 'get_fields',
+    params: {
+      field,
+      offset,
+      limit,
+    },
+  };
+
+  return await APIRequest(requestBody);
+};
+
+export const filterProducts = async (field, value) => {
+  const requestBody = {
+    action: 'filter',
+    params: {
+      [field]: value,
+    },
+  };
+
+  return await APIRequest(requestBody);
+};
