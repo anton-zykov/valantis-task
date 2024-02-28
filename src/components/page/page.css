@@ -35,6 +35,12 @@
 }
 
 .page__nav-link {
+  display: block;
+  height: 100%;
+  cursor: pointer;
+}
+
+.page__nav-link svg {
   position: fixed;
   top: 50%;
 }

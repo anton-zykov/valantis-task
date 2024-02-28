@@ -1,11 +1,5 @@
 import './styles/main.css';
-import APIRequest from './services/requests';
+import Page from './components/page/Page';
 
-const data = {
-	"action": "get_ids",
-	"params": {"offset": 10, "limit": 3}
-};
-
-APIRequest(data).then((response) => {
-	document.getElementById('test-block').innerHTML = JSON.stringify(response);
-});
+const page = new Page();
+document.body.append(page.element);
