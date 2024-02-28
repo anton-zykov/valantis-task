@@ -19,7 +19,6 @@ export default class Page {
       main: this.element.querySelector('.page__main'),
     };
 
-    this.activateNavigation();
     this.render();
   }
 
@@ -51,6 +50,7 @@ export default class Page {
 
   async render () {
     this.destroyCards();
+    this.deactivateNavigation();
     if (this.page === 0) this.subElements.left.setAttribute('disabled', '');
     else this.subElements.left.removeAttribute('disabled');
 
@@ -59,6 +59,8 @@ export default class Page {
     this.subElements.main.append(
       ...this.cards.map((card) => card.element)
     );
+
+    this.activateNavigation();
   }
 
   handleLeftArrowClick = () => {
@@ -76,6 +78,11 @@ export default class Page {
   activateNavigation () {
     this.subElements.left.addEventListener('click', this.handleLeftArrowClick);
     this.subElements.right.addEventListener('click', this.handleRightArrowClick);
+  }
+
+  deactivateNavigation () {
+    this.subElements.left.removeEventListener('click', this.handleLeftArrowClick);
+    this.subElements.right.removeEventListener('click', this.handleRightArrowClick);
   }
 
   destroyCards () {
