@@ -8,6 +8,7 @@
   --black: hsl(0, 0%, 0%);
   --silver: hsl(0, 0%, 75%);
   --light-grey: hsla(0, 0%, 70%, 0.75);
+  --very-light-grey: hsla(0, 0%, 70%, 0.2);
 
   font-family: 'Montserrat', sans-serif;
 }

@@ -8,6 +8,10 @@
   flex-direction: column;
 }
 
+.card:hover {
+  background-color: var(--very-light-grey);
+}
+
 .card__id {
   color: var(--light-grey);
   font-size: 0.5em;

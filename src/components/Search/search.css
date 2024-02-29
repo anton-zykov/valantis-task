@@ -29,6 +29,10 @@
   cursor: pointer;
 }
 
+.search__submit:hover {
+  background-color: var(--very-light-grey);
+}
+
 .search__controller {
   display: none;
 }

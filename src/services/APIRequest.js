@@ -27,6 +27,7 @@ const APIRequest = async (data) => {
     return data;
   } catch (e) {
     console.error(e.message);
+    alert('Ошибка сервера, попробуйте ещё раз');
   }
 };
 
