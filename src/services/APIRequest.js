@@ -1,7 +1,6 @@
 import createHash from "./createHash";
 
-const baseURL = 'http://api.valantis.store:40000/';
-const reserveURL = 'https://api.valantis.store:41000/';
+const baseURL = 'https://api.valantis.store:41000/';
 
 const APIRequest = async (data) => {
   const params = {
@@ -13,22 +12,17 @@ const APIRequest = async (data) => {
     body: JSON.stringify(data),
   };
 
-  try {
-    const response = await fetch(baseURL, params);
-    const data = await response.json();
-    return data;
-  } catch (e) {
-    console.error(e.message);
+  for (let i = 0; i <= 1; i++) {
+    try {
+      const response = await fetch(baseURL, params);
+      const data = await response.json();
+      return data;
+    } catch (e) {
+      console.error(e.message);
+    }
   }
 
-  try {
-    const response = await fetch(reserveURL, params);
-    const data = await response.json();
-    return data;
-  } catch (e) {
-    console.error(e.message);
-    alert('Ошибка сервера, попробуйте ещё раз');
-  }
+  alert('Ошибка сервера, попробуйте ещё раз');
 };
 
 export default APIRequest;
