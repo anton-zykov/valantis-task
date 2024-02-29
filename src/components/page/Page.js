@@ -10,6 +10,7 @@ export default class Page {
     this.limit = limit;
     this.filter = filter;
 
+    this.allIDs = [];
     this.products = [];
     this.cards = [];
     this.element = this.createElement();
@@ -19,7 +20,7 @@ export default class Page {
       main: this.element.querySelector('.page__main'),
     };
 
-    this.render();
+    this.loadIDs().then(() => this.render());
     this.createFilterListeners();
   }
 
@@ -43,11 +44,20 @@ export default class Page {
     return container.firstElementChild;
   }
 
-  async loadProducts () {
+  deleteDuplicates (ids) {
+    const idset = new Set(ids);
+    return Array.from(idset);
+  }
+
+  async loadIDs () {
     const response = this.filter.field
       ? await filterProducts(this.filter.field, this.filter.value)
-      : await getIDs(this.offset, this.limit);
-    const ids = response.result;
+      : await getIDs();
+    this.allIDs = this.deleteDuplicates(response.result);
+  }
+
+  async loadProducts () {
+    const ids = this.allIDs.slice(this.page * this.limit, (this.page + 1) * this.limit)
     this.products = (await getItems(ids)).result;
   }
 
@@ -68,13 +78,13 @@ export default class Page {
 
   handleLeftArrowClick = () => {
     this.page -= 1;
-    this.offset = this.page * 50;
+    this.offset = this.page * this.limit;
     this.render();
   }
 
   handleRightArrowClick = () => {
     this.page += 1;
-    this.offset = this.page * 50;
+    this.offset = this.page * this.limit;
     this.render();
   }
 
@@ -93,7 +103,7 @@ export default class Page {
       this.page = 0;
       this.offset = 0;
       this.filter = {};
-      this.render();
+      this.loadIDs().then(() => this.render());
     };
 
     const handleFilterSet = (event) => {
@@ -103,7 +113,7 @@ export default class Page {
         field: event.detail.field,
         value: event.detail.value,
       };
-      this.render();
+      this.loadIDs().then(() => this.render());
     };
 
     document.addEventListener('filter-reset', handleFilterReset);

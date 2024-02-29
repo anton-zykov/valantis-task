@@ -1,13 +1,14 @@
 import APIRequest from './APIRequest';
 
-export const getIDs = async (offset = 0, limit = 50) => {
+export const getIDs = async (offset = 0, limit) => {
   const requestBody = {
     action: 'get_ids',
     params: {
       offset,
-      limit,
     },
   };
+
+  if (limit) requestBody.params.limit = limit;
 
   return await APIRequest(requestBody);
 };
