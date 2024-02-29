@@ -61,3 +61,13 @@
 .page__card {
   width: 18em;
 }
+
+.page__loader, .page__no-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  font-size: 2em;
+  font-weight: 500;
+  text-align: center;
+}

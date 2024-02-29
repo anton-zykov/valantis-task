@@ -4,7 +4,9 @@
 
 .search__form {
   display: flex;
-  gap: 2em;
+  column-gap: 2em;
+  row-gap: 0.5em;
+  flex-wrap: wrap;
 }
 
 .search__container {

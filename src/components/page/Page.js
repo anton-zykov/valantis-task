@@ -28,11 +28,11 @@ export default class Page {
   createTemplate () {
     return `
     <div class="page">
-      <nav class="page__nav page__nav_left">
+      <nav class="page__nav page__nav_left" disabled>
         <div class="page__nav-link">${arrow}</div>
       </nav>
       <main class="page__main"></main>
-      <nav class="page__nav page__nav_right">
+      <nav class="page__nav page__nav_right" disabled>
         <div class="page__nav-link">${arrow}</div>
       </nav>
     </div>
@@ -66,19 +66,38 @@ export default class Page {
   async render () {
     this.destroyCards();
     this.deactivateNavigation();
+    this.showLoader();
 
     if (this.page === 0) this.subElements.left.setAttribute('disabled', '');
     else this.subElements.left.removeAttribute('disabled');
-    if (this.page === this.totalPages - 1) this.subElements.right.setAttribute('disabled', '');
+    if (this.page >= this.totalPages - 1) this.subElements.right.setAttribute('disabled', '');
     else this.subElements.right.removeAttribute('disabled');
 
     await this.loadProducts();
+    if (this.products.length === 0) {
+      this.showNoContent();
+      return;
+    }
+
     this.cards = this.products.map((product) => new Card(product));
+    this.hideLoader();
     this.subElements.main.append(
       ...this.cards.map((card) => card.element)
     );
 
     this.activateNavigation();
+  }
+
+  showLoader () {
+    this.subElements.main.innerHTML = '<div class="page__loader">Загрузка...</div>';
+  }
+
+  hideLoader () {
+    this.subElements.main.innerHTML = '';
+  }
+
+  showNoContent () {
+    this.subElements.main.innerHTML = '<div class="page__no-content">По вашему запросу ничего не найдено</div>'
   }
 
   handleLeftArrowClick = () => {
