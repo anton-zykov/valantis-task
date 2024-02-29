@@ -99,25 +99,21 @@ export default class Page {
   }
 
   createFilterListeners () {
-    const handleFilterReset = () => {
+    const handleFilterChange = (event) => {
       this.page = 0;
       this.offset = 0;
-      this.filter = {};
+      if (event.type === 'filter-reset') this.filter = {};
+      else {
+        this.filter = {
+          field: event.detail.field,
+          value: event.detail.value,
+        };
+      }
       this.loadIDs().then(() => this.render());
     };
 
-    const handleFilterSet = (event) => {
-      this.page = 0;
-      this.offset = 0;
-      this.filter = {
-        field: event.detail.field,
-        value: event.detail.value,
-      };
-      this.loadIDs().then(() => this.render());
-    };
-
-    document.addEventListener('filter-reset', handleFilterReset);
-    document.addEventListener('filter-set', handleFilterSet);
+    document.addEventListener('filter-reset', handleFilterChange);
+    document.addEventListener('filter-set', handleFilterChange);
   }
 
   destroyCards () {
