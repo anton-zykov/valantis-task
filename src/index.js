@@ -1,5 +1,5 @@
 import './styles/main.css';
-import Page from './components/page/Page';
+import Page from './components/Page/Page';
 import Search from './components/Search/Search';
 
 const page = new Page();
