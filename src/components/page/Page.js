@@ -7,6 +7,7 @@ export default class Page {
   constructor ({ offset = 0, page = 0, limit = 50, filter = {} } = {}) {
     this.offset = offset;
     this.page = page;
+    this.totalPages = null;
     this.limit = limit;
     this.filter = filter;
 
@@ -54,6 +55,7 @@ export default class Page {
       ? await filterProducts(this.filter.field, this.filter.value)
       : await getIDs();
     this.allIDs = this.deleteDuplicates(response.result);
+    this.totalPages = Math.ceil(this.allIDs.length / this.limit);
   }
 
   async loadProducts () {
@@ -64,8 +66,11 @@ export default class Page {
   async render () {
     this.destroyCards();
     this.deactivateNavigation();
+
     if (this.page === 0) this.subElements.left.setAttribute('disabled', '');
     else this.subElements.left.removeAttribute('disabled');
+    if (this.page === this.totalPages - 1) this.subElements.right.setAttribute('disabled', '');
+    else this.subElements.right.removeAttribute('disabled');
 
     await this.loadProducts();
     this.cards = this.products.map((product) => new Card(product));
