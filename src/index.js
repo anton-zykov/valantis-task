@@ -1,5 +1,7 @@
 import './styles/main.css';
 import Page from './components/page/Page';
+import Search from './components/Search/Search';
 
 const page = new Page();
-document.body.append(page.element);
+const search = new Search();
+document.body.append(search.element, page.element);

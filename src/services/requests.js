@@ -23,14 +23,15 @@ export const getItems = async (ids = []) => {
   return await APIRequest(requestBody);
 };
 
-export const getFields = async (field, offset, limit = 50) => {
+export const getFields = async (field, offset, limit) => {
   const requestBody = {
     action: 'get_fields',
-    params: {
-      field,
-      offset,
-      limit,
-    },
+  };
+
+  if (field || offset || limit) requestBody.params = {
+    field,
+    offset,
+    limit,
   };
 
   return await APIRequest(requestBody);

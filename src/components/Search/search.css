@@ -1,0 +1,27 @@
+.search {
+
+}
+
+.search__form {}
+
+.search__container {}
+
+.search__input {}
+
+.search__input:disabled {
+  display: none;
+}
+
+.search__submit {}
+
+.search__controller {
+  display: none;
+}
+
+.search__controller:checked + .search__switcher {
+  color: blue;
+}
+
+.search__switcher {
+  cursor: pointer;
+}

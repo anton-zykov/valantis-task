@@ -2,6 +2,7 @@
 @import url('./normalize.css');
 @import url('../components/Page/Page.css');
 @import url('../components/Card/Card.css');
+@import url('../components/Search/Search.css');
 
 :root {
   --black: hsl(0, 0%, 0%);

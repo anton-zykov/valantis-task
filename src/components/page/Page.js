@@ -1,10 +1,10 @@
-import { getIDs, getItems, getFields, filterProducts } from '../../services/requests';
+import { getIDs, getItems, filterProducts } from '../../services/requests';
 import Card from '../Card/Card';
 
 const arrow = '<svg fill="#000000" height="40px" width="40px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve"><path id="XMLID_92_" d="M111.213,165.004L250.607,25.607c5.858-5.858,5.858-15.355,0-21.213c-5.858-5.858-15.355-5.858-21.213,0.001l-150,150.004C76.58,157.211,75,161.026,75,165.004c0,3.979,1.581,7.794,4.394,10.607l150,149.996C232.322,328.536,236.161,330,240,330s7.678-1.464,10.607-4.394c5.858-5.858,5.858-15.355,0-21.213L111.213,165.004z"/></svg>';
 
 export default class Page {
-  constructor ({ offset = 0, page = 0, limit = 50, filter } = {}) {
+  constructor ({ offset = 0, page = 0, limit = 50, filter = {} } = {}) {
     this.offset = offset;
     this.page = page;
     this.limit = limit;
@@ -20,6 +20,7 @@ export default class Page {
     };
 
     this.render();
+    this.createFilterListeners();
   }
 
   createTemplate () {
@@ -43,7 +44,9 @@ export default class Page {
   }
 
   async loadProducts () {
-    const response = await getIDs(this.offset, this.limit);
+    const response = this.filter.field
+      ? await filterProducts(this.filter.field, this.filter.value)
+      : await getIDs(this.offset, this.limit);
     const ids = response.result;
     this.products = (await getItems(ids)).result;
   }
@@ -83,6 +86,28 @@ export default class Page {
   deactivateNavigation () {
     this.subElements.left.removeEventListener('click', this.handleLeftArrowClick);
     this.subElements.right.removeEventListener('click', this.handleRightArrowClick);
+  }
+
+  createFilterListeners () {
+    const handleFilterReset = () => {
+      this.page = 0;
+      this.offset = 0;
+      this.filter = {};
+      this.render();
+    };
+
+    const handleFilterSet = (event) => {
+      this.page = 0;
+      this.offset = 0;
+      this.filter = {
+        field: event.detail.field,
+        value: event.detail.value,
+      };
+      this.render();
+    };
+
+    document.addEventListener('filter-reset', handleFilterReset);
+    document.addEventListener('filter-set', handleFilterSet);
   }
 
   destroyCards () {
