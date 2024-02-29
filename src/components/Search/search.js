@@ -19,7 +19,7 @@ export default class Search {
       <form class="search__form">
         <div class="search__container"></div>
         <input type="text" name="text" class="search__input" placeholder="Значение поиска" disabled />
-        <button type="submit" class="search__submit">Фильтр</button>
+        <button type="submit" class="search__submit">Фильтровать</button>
       </form>
     </div>
     `;
@@ -27,7 +27,8 @@ export default class Search {
 
   createSwitcherTemplate (field) {
     return `
-    <input type="radio" name="field" value="${field}" id="search-${field}" class="search__controller" />
+    <input type="radio" name="field" value="${field}" id="search-${field}" 
+      class="search__controller" ${field === 'all' ? 'checked' : ''} />
     <label for="search-${field}" class="search__switcher">${field}</label>
     `;
   }
@@ -41,7 +42,7 @@ export default class Search {
   async createSwitcher () {
     const response = await getFields();
     this.element.querySelector('.search__container').innerHTML = [
-      this.createSwitcherTemplate('no-filter'),
+      this.createSwitcherTemplate('all'),
       ...response.result.map((field) => this.createSwitcherTemplate(field))
     ].join(' ');
 
@@ -49,10 +50,12 @@ export default class Search {
   }
 
   handleOptionChange = (event) => {
-    if (event.target.value === 'no-filter') {
+    if (event.target.value === 'all') {
       this.subElements.input.setAttribute('disabled', '');
+      this.subElements.input.removeAttribute('required');
     } else {
       this.subElements.input.removeAttribute('disabled');
+      this.subElements.input.setAttribute('required', '');
     }
   }
 
@@ -65,12 +68,13 @@ export default class Search {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    this.subElements.input.blur();
     const formData = new FormData(this.subElements.form);
     const field = formData.get('field');
     const value = field === 'price'
       ? +formData.get('text')
       : formData.get('text');
-    if (field === 'no-filter') {
+    if (field === 'all') {
       document.dispatchEvent(
         new CustomEvent('filter-reset', { bubbles: true })
       );
