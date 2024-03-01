@@ -10,7 +10,7 @@ const createHash = () => {
     ? now.getUTCDate()
     : '0' + (now.getUTCDate());
 
-  return md5(`Valantis_${year}${month}${day}`);
+  return md5(`${process.env.PASSWORD}_${year}${month}${day}`);
 };
 
 export default createHash;
